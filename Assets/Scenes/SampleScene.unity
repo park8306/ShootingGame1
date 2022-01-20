@@ -940,10 +940,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  maxShotDelay: 0.1
+  curShotDelay: 0
   isTouchTop: 0
   isTouchBottom: 0
   isTouchRight: 0
   isTouchLeft: 0
+  PlayerBulletA: {fileID: 353172189208437753, guid: 838f3f184f60dfa49998e0b98bf3154a, type: 3}
+  PlayerBulletB: {fileID: 1183695941548198883, guid: 7122969b82e033b4ea731733e6752ae4, type: 3}
 --- !u!212 &1696263480
 SpriteRenderer:
   m_ObjectHideFlags: 0

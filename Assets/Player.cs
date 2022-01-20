@@ -7,6 +7,10 @@ public class Player : MonoBehaviour
 {
     // Update is called once per frame
     public float speed;
+    public float power;
+    public float maxShotDelay;
+    public float curShotDelay;
+
     public bool isTouchTop; // 경계에 닿았는지 안닿았는지 확인하기 위한 변수
     public bool isTouchBottom;
     public bool isTouchRight;
@@ -16,6 +20,7 @@ public class Player : MonoBehaviour
     public GameObject PlayerBulletB;
 
     Animator anim;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -25,13 +30,51 @@ public class Player : MonoBehaviour
     {
         Move();
         Fire();
+        Reload();
+    }
+
+    private void Reload()
+    {
+        curShotDelay += Time.deltaTime;
     }
 
     private void Fire()
     {
-        GameObject bullet = Instantiate(PlayerBulletA, transform.position, transform.rotation); // 총알 생성하는 코드
-        Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
-        rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
+        if (!Input.GetButton("Fire1")) // fire1 버튼을 누르지 않으면 리턴! 실행 시키지 않음
+            return;
+        if (curShotDelay < maxShotDelay)
+            return;
+
+        switch (power)
+        {
+            case 1:
+                // Power One
+                GameObject bullet = Instantiate(PlayerBulletA, transform.position, transform.rotation); // 총알 생성하는 코드
+                Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
+                rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
+                break;
+            case 2:
+                GameObject bulletR = Instantiate(PlayerBulletA, transform.position + Vector3.right * 0.1f, transform.rotation); // 총알 생성하는 코드
+                GameObject bulletL = Instantiate(PlayerBulletA, transform.position + Vector3.left * 0.1f, transform.rotation); // 총알 생성하는 코드
+                Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
+                Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
+                rigidR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
+                rigidL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
+                break;
+            case 3:
+                GameObject bulletRR = Instantiate(PlayerBulletA, transform.position + Vector3.right * 0.35f, transform.rotation); // 총알 생성하는 코드
+                GameObject bulletCC = Instantiate(PlayerBulletB, transform.position , transform.rotation); // 총알 생성하는 코드
+                GameObject bulletLL = Instantiate(PlayerBulletA, transform.position + Vector3.left * 0.35f, transform.rotation); // 총알 생성하는 코드
+                Rigidbody2D rigidRR = bulletRR.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
+                Rigidbody2D rigidCC = bulletCC.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
+                Rigidbody2D rigidLL = bulletLL.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
+                rigidRR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
+                rigidCC.AddForce(Vector2.up * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
+                rigidLL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
+                break;
+        }
+
+        curShotDelay = 0;
     }
 
     private void Move()
