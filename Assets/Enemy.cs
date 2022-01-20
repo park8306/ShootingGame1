@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     Rigidbody2D rigid;
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>(); // 스프라이트 렌더러를 통해 피격효과 구현
         rigid = GetComponent<Rigidbody2D>();
         rigid.velocity = Vector2.down * speed;
     }
@@ -45,6 +45,8 @@ public class Enemy : MonoBehaviour
         {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
             OnHit(bullet.dmg);
+
+            Destroy(collision.gameObject);
         }
     }
 }
