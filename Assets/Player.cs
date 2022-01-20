@@ -11,15 +11,22 @@ public class Player : MonoBehaviour
     public bool isTouchRight;
     public bool isTouchLeft;
 
+    Animator anim;
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
+
     void Update()
     {
-        float h = Input.GetAxisRaw("Horizontal"); // -1, 0, 1 딱 3가지 값만 들어옴
-        if ((isTouchRight && h == 1) || (isTouchLeft && h == -1))
-            h = 0;
-
+        float h = Input.GetAxisRaw("Horizontal"); // -1, 0, 1 딱 3가지 값만 들어옴.
+        anim.SetInteger("Input", (int)h);
+        if ((isTouchRight && h == 1) || (isTouchLeft && h == -1)) // 경계선에 닿았고 입력값이 있으면
+            h = 0;  // 0으로 변경
         float v = Input.GetAxisRaw("Vertical");
         if ((isTouchTop && v == 1) || (isTouchBottom && v == -1))
             v = 0;
+
         Vector3 curPos = transform.position; // 현재 플레이어의 위치
         Vector3 nextPos = new Vector3(h, v, 0) * speed * Time.deltaTime; // 다음에 갈 위치 * 속도
 
