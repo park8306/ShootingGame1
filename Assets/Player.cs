@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     public float maxShotDelay;
     public float curShotDelay;
 
+    public int life;
+    public int score;
+
     public bool isTouchTop; // 경계에 닿았는지 안닿았는지 확인하기 위한 변수
     public bool isTouchBottom;
     public bool isTouchRight;
@@ -20,6 +23,7 @@ public class Player : MonoBehaviour
     public GameObject PlayerBulletB;
 
     public GameManager gamemanager;
+    public bool isHit;
 
     Animator anim;
 
@@ -117,8 +121,21 @@ public class Player : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyBullet"))
         {
+            if (isHit)
+                return;
+            isHit = true;
+            life--;
+            gamemanager.UpdateLifeIcon(life);
+            if (life == 0)
+            {
+                gamemanager.GameOver();
+            }
+            else
+            {
+                gamemanager.RespawnPlayer();
+            }
             gameObject.SetActive(false); // 플레이어
-            gamemanager.RespawnPlayer();
+            Destroy(collision.gameObject);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
