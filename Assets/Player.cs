@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     public GameObject PlayerBulletA;
     public GameObject PlayerBulletB;
 
+    public GameManager gamemanager;
+
     Animator anim;
 
     private void Awake()
@@ -112,6 +114,11 @@ public class Player : MonoBehaviour
                     isTouchLeft = true;
                     break;
             }
+        }
+        else if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            gameObject.SetActive(false); // 플레이어
+            gamemanager.RespawnPlayer();
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

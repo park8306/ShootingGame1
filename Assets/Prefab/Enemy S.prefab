@@ -143,5 +143,5 @@ MonoBehaviour:
   EnemyBulletA: {fileID: 1183695941548198883, guid: 84fe01f710684b04f8d18e4f21ea01a6, type: 3}
   EnemyBulletB: {fileID: 1183695941548198883, guid: d6135a5494f074540b06cebcc0d0246d, type: 3}
   player: {fileID: 0}
-  maxShotDelay: 2
+  maxShotDelay: 1
   curShotDelay: 0

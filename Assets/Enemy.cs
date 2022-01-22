@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
 
             Vector3 dirVec = player.transform.position - transform.position; // 플레이어 방향을 구함
-            rigid.AddForce(dirVec.normalized * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
+            rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
         }
         else if(enemyName == "L")
         {
@@ -55,8 +55,8 @@ public class Enemy : MonoBehaviour
             Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
             Vector3 dirVecR = player.transform.position - (transform.position + Vector3.right * 0.3f);
             Vector3 dirVecL = player.transform.position - (transform.position + Vector3.left * 0.3f);
-            rigidR.AddForce(dirVecR.normalized * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
-            rigidL.AddForce(dirVecL.normalized * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
+            rigidR.AddForce(dirVecR.normalized * 4, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
+            rigidL.AddForce(dirVecL.normalized * 4, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
         }
 
         curShotDelay = 0;

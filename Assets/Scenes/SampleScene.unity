@@ -1179,6 +1179,7 @@ MonoBehaviour:
   - {fileID: 147360372}
   maxSpawnDelay: 2
   curSpawnDelay: 0
+  player: {fileID: 1696263478}
 --- !u!4 &1408672775
 Transform:
   m_ObjectHideFlags: 0
@@ -1454,6 +1455,7 @@ MonoBehaviour:
   isTouchLeft: 0
   PlayerBulletA: {fileID: 353172189208437753, guid: 838f3f184f60dfa49998e0b98bf3154a, type: 3}
   PlayerBulletB: {fileID: 1183695941548198883, guid: 7122969b82e033b4ea731733e6752ae4, type: 3}
+  gamemanager: {fileID: 1408672774}
 --- !u!212 &1696263480
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1513,7 +1515,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1696263478}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.02, z: 0}
+  m_LocalPosition: {x: 0, y: -4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

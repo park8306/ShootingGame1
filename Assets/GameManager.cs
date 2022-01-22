@@ -47,4 +47,15 @@ public class GameManager : MonoBehaviour
             rigid.velocity = new Vector2(0, enemyLogic.speed * (-1));
         }
     }
+    public void RespawnPlayer()
+    {
+        StartCoroutine(RespawnPlayerExe());
+    }
+
+    IEnumerator RespawnPlayerExe()
+    {
+        yield return new WaitForSeconds(1.5f);
+        player.transform.position = Vector3.up * -4; // 위치 초기화
+        player.SetActive(true); // 플레이어 다시 살리기
+    }
 }
