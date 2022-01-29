@@ -7,7 +7,10 @@ public class Player : MonoBehaviour
 {
     // Update is called once per frame
     public float speed;
-    public float power;
+    public int power;
+    public int maxPower;
+    public int boom;
+    public int maxBoom;
     public float maxShotDelay;
     public float curShotDelay;
 
@@ -21,9 +24,11 @@ public class Player : MonoBehaviour
 
     public GameObject PlayerBulletA;
     public GameObject PlayerBulletB;
+    public GameObject BoomEffect;
 
     public GameManager gamemanager;
     public bool isHit;
+    public bool isBoomTime;
 
     Animator anim;
 
@@ -36,7 +41,39 @@ public class Player : MonoBehaviour
     {
         Move();
         Fire();
+        Boom();
         Reload();
+    }
+
+    private void Boom()
+    {
+        if (!Input.GetButton("Fire2"))
+            return;
+        if (isBoomTime)
+            return;
+
+        if (boom == 0)
+            return;
+
+        boom--;
+        gamemanager.UpdateBoomIcon(boom);
+        isBoomTime = true;
+        BoomEffect.SetActive(true);
+        StartCoroutine(OffBoomEffect()); // 시간 지나면 폭탄 이펙트 사라지게 하기
+
+        // 적 사라지게 하기
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int index = 0; index < enemies.Length; index++)
+        {
+            Enemy enemyLogic = enemies[index].GetComponent<Enemy>();
+            enemyLogic.OnHit(1000);
+        }
+        // 총알 사라지게 하기
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
+        for (int index = 0; index < enemies.Length; index++)
+        {
+            Destroy(bullets[index]); // 여기서 에러 발생
+        }
     }
 
     private void Reload()
@@ -137,7 +174,42 @@ public class Player : MonoBehaviour
             gameObject.SetActive(false); // 플레이어
             Destroy(collision.gameObject);
         }
+        else if( collision.gameObject.CompareTag("Item"))
+        {
+            Item item = collision.gameObject.GetComponent<Item>();
+            switch(item.type)
+            {
+                case "Coin":
+                    score += 1000;
+                    break;
+                case "Power":
+                    if (power == maxPower)
+                        score += 500;
+                    else
+                    {
+                        power++;
+                    }
+                    break;
+                case "Boom":
+                    if (boom == maxBoom)
+                        score += 500;
+                    else
+                    {
+                        boom++;
+                    }
+                    break;
+            }
+            Destroy(collision.gameObject);
+        }
     }
+
+    private IEnumerator OffBoomEffect()
+    {
+        yield return new WaitForSeconds(4f);
+        BoomEffect.SetActive(false);
+        isBoomTime = false;
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Border")) // CompareTag를 이용하여 비교하는 것이 성능향상에 좋음

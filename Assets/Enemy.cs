@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
         curShotDelay = 0;
     }
 
-    void OnHit(int dmg)
+    public void OnHit(int dmg)
     {
         health -= dmg;
         StartCoroutine(ReturnSprite());

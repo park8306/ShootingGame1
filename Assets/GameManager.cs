@@ -17,7 +17,13 @@ public class GameManager : MonoBehaviour
     public GameObject player; // 게임 메니저가 플레이어를 들고 있어야 함
     public Text scoreText;
     public GameObject[] lifeImageObjs;
+    public GameObject[] boomImageObjs;
     public GameObject gameOverSet;
+
+    private void Awake()
+    {
+        UpdateBoomIcon(player.GetComponent<Player>().boom);
+    }
 
     private void Update()
     {
@@ -75,7 +81,12 @@ public class GameManager : MonoBehaviour
             return;
         lifeImageObjs[life].SetActive(false);
     }
-
+    internal void UpdateBoomIcon(int boom)
+    {
+        if (boom < 0)
+            return;
+        boomImageObjs[boom].SetActive(false);
+    }
     internal void GameOver()
     {
         gameOverSet.SetActive(true);
