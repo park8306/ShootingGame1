@@ -143,6 +143,9 @@ MonoBehaviour:
   - {fileID: 4326287474489854147, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
   EnemyBulletA: {fileID: 1183695941548198883, guid: 84fe01f710684b04f8d18e4f21ea01a6, type: 3}
   EnemyBulletB: {fileID: 1183695941548198883, guid: d6135a5494f074540b06cebcc0d0246d, type: 3}
+  itemCoin: {fileID: 8690664980286599815, guid: ee3147056d4434342a3bedce5b3cd0bd, type: 3}
+  itemBoom: {fileID: 7042778376113583441, guid: c01abc12953dc9843b5c780c74dae1bd, type: 3}
+  itemPower: {fileID: 3393764900358584039, guid: 1dc8254097091e64fbe2affe3ca49aa2, type: 3}
   player: {fileID: 0}
   maxShotDelay: 1
   curShotDelay: 0

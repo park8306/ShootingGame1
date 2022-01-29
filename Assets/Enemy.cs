@@ -15,6 +15,9 @@ public class Enemy : MonoBehaviour
 
     public GameObject EnemyBulletA;
     public GameObject EnemyBulletB;
+    public GameObject itemCoin;
+    public GameObject itemBoom;
+    public GameObject itemPower;
     public GameObject player;
 
     public float maxShotDelay;
@@ -65,6 +68,8 @@ public class Enemy : MonoBehaviour
 
     public void OnHit(int dmg)
     {
+        if (health <= 0)
+            return;
         health -= dmg;
         StartCoroutine(ReturnSprite());
 
@@ -72,6 +77,28 @@ public class Enemy : MonoBehaviour
         {
             Player playerLogic = player.GetComponent<Player>();
             playerLogic.score += enemyScore;
+
+            // 랜덤 확률로 아이템 드롭
+            int ran = Random.Range(0, 10);
+            if(ran < 3)
+            {
+                Debug.Log("Not Item");
+            }
+            else if (ran < 6)
+            {
+                Instantiate(itemCoin, transform.position, itemCoin.transform.rotation);
+            }
+            else if (ran < 8)
+            {
+                Instantiate(itemPower, transform.position, itemPower.transform.rotation);
+
+            }
+            else if (ran < 10)
+            {
+                Instantiate(itemBoom, transform.position, itemBoom.transform.rotation);
+
+            }
+
             Destroy(gameObject);
         }
     }

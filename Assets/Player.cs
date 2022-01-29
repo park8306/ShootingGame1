@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
         }
         // 총알 사라지게 하기
         GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
-        for (int index = 0; index < enemies.Length; index++)
+        for (int index = 0; index < bullets.Length; index++)
         {
             Destroy(bullets[index]); // 여기서 에러 발생
         }
@@ -206,7 +206,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator OffBoomEffect()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         BoomEffect.SetActive(false);
         isBoomTime = false;
     }
