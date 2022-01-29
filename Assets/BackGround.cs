@@ -12,7 +12,7 @@ public class BackGround : MonoBehaviour
         pos = transform.position;
         if(pos.y <= -10)
         {
-            pos.y = 10 ;
+            pos.y = Camera.main.orthographicSize * 2;
             transform.position = pos;
         }
         else
