@@ -85,7 +85,15 @@ public class GameManager : MonoBehaviour
     {
         if (boom < 0)
             return;
-        boomImageObjs[boom].SetActive(false);
+        for (int i = 0; i < boomImageObjs.Length; i++)
+        {
+            boomImageObjs[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < boom; i++)
+        {
+            boomImageObjs[i].gameObject.SetActive(true);
+        }
+        //boomImageObjs[boom].SetActive(false);
     }
     internal void GameOver()
     {

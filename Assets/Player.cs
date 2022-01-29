@@ -196,6 +196,7 @@ public class Player : MonoBehaviour
                     else
                     {
                         boom++;
+                        gamemanager.UpdateBoomIcon(boom);
                     }
                     break;
             }
