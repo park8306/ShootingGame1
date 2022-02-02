@@ -26,7 +26,8 @@ public class Player : MonoBehaviour
     public GameObject PlayerBulletB;
     public GameObject BoomEffect;
 
-    public GameManager gamemanager;
+    public GameManager gameManager;
+    public ObjectManager objectManager;
     public bool isHit;
     public bool isBoomTime;
 
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour
             return;
 
         boom--;
-        gamemanager.UpdateBoomIcon(boom);
+        gameManager.UpdateBoomIcon(boom);
         isBoomTime = true;
         BoomEffect.SetActive(true);
         StartCoroutine(OffBoomEffect()); // 시간 지나면 폭탄 이펙트 사라지게 하기
@@ -72,7 +73,7 @@ public class Player : MonoBehaviour
         GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
         for (int index = 0; index < bullets.Length; index++)
         {
-            Destroy(bullets[index]); // 여기서 에러 발생
+            bullets[index].SetActive(false);
         }
     }
 
@@ -92,22 +93,28 @@ public class Player : MonoBehaviour
         {
             case 1:
                 // Power One
-                GameObject bullet = Instantiate(PlayerBulletA, transform.position, transform.rotation); // 총알 생성하는 코드
+                GameObject bullet = objectManager.MakeObj("BulletPlayerA"); // 총알 생성하는 코드
+                bullet.transform.position = transform.position;
                 Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
                 rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
                 break;
             case 2:
-                GameObject bulletR = Instantiate(PlayerBulletA, transform.position + Vector3.right * 0.1f, transform.rotation); // 총알 생성하는 코드
-                GameObject bulletL = Instantiate(PlayerBulletA, transform.position + Vector3.left * 0.1f, transform.rotation); // 총알 생성하는 코드
+                GameObject bulletR = objectManager.MakeObj("BulletPlayerA"); // 총알 생성하는 코드
+                GameObject bulletL = objectManager.MakeObj("BulletPlayerA"); // 총알 생성하는 코드
+                bulletR.transform.position = transform.position + Vector3.right * 0.2f;
+                bulletL.transform.position = transform.position + Vector3.left * 0.2f;
                 Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
                 Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
                 rigidR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
                 rigidL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);   // addForce를 통해 총알에 힘을 부여
                 break;
             case 3:
-                GameObject bulletRR = Instantiate(PlayerBulletA, transform.position + Vector3.right * 0.35f, transform.rotation); // 총알 생성하는 코드
-                GameObject bulletCC = Instantiate(PlayerBulletB, transform.position , transform.rotation); // 총알 생성하는 코드
-                GameObject bulletLL = Instantiate(PlayerBulletA, transform.position + Vector3.left * 0.35f, transform.rotation); // 총알 생성하는 코드
+                GameObject bulletRR = objectManager.MakeObj("BulletPlayerA"); 
+                GameObject bulletCC = objectManager.MakeObj("BulletPlayerB"); 
+                GameObject bulletLL = objectManager.MakeObj("BulletPlayerA"); 
+                bulletRR.transform.position = transform.position + Vector3.right * 0.35f;
+                bulletCC.transform.position = transform.position;
+                bulletLL.transform.position = transform.position + Vector3.left * 0.35f;
                 Rigidbody2D rigidRR = bulletRR.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
                 Rigidbody2D rigidCC = bulletCC.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
                 Rigidbody2D rigidLL = bulletLL.GetComponent<Rigidbody2D>(); // 총알의 rigidbody2D 값을 가져옴
@@ -162,17 +169,17 @@ public class Player : MonoBehaviour
                 return;
             isHit = true;
             life--;
-            gamemanager.UpdateLifeIcon(life);
+            gameManager.UpdateLifeIcon(life);
             if (life == 0)
             {
-                gamemanager.GameOver();
+                gameManager.GameOver();
             }
             else
             {
-                gamemanager.RespawnPlayer();
+                gameManager.RespawnPlayer();
             }
             gameObject.SetActive(false); // 플레이어
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
         else if( collision.gameObject.CompareTag("Item"))
         {
@@ -196,11 +203,11 @@ public class Player : MonoBehaviour
                     else
                     {
                         boom++;
-                        gamemanager.UpdateBoomIcon(boom);
+                        gameManager.UpdateBoomIcon(boom);
                     }
                     break;
             }
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
     }
 

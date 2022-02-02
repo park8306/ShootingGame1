@@ -137,7 +137,8 @@ MonoBehaviour:
   enemyName: S
   enemyScore: 10
   speed: 5
-  health: 10
+  maxHP: 10
+  HP: 0
   sprites:
   - {fileID: 8414478535512612329, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
   - {fileID: 4326287474489854147, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
@@ -147,5 +148,6 @@ MonoBehaviour:
   itemBoom: {fileID: 7042778376113583441, guid: c01abc12953dc9843b5c780c74dae1bd, type: 3}
   itemPower: {fileID: 3393764900358584039, guid: 1dc8254097091e64fbe2affe3ca49aa2, type: 3}
   player: {fileID: 0}
+  objectManager: {fileID: 0}
   maxShotDelay: 1
   curShotDelay: 0
